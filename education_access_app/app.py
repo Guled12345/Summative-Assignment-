@@ -1,4 +1,8 @@
 import streamlit as st
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from education_access_app.model_utils import load_model
 from home import home_page
 from prediction import prediction_page
