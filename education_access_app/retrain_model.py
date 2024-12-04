@@ -1,16 +1,21 @@
 import streamlit as st
-from model_utils import retrain_model
 
 def retrain_page():
-    st.title("Retrain Model")
-    st.write("Upload new training data to retrain the model.")
+    st.title("Retrain the Model")
+    st.write("This page allows you to retrain the machine learning model with updated data.")
     
-    # File uploader for new training data
-    uploaded_file = st.file_uploader("Choose a CSV file for retraining", type="csv")
+    st.subheader("Upload Training Data:")
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     
     if uploaded_file:
-        st.write("File uploaded successfully.")
-        
-        if st.button("Retrain Model"):
-            retrain_model(uploaded_file)
-            st.success("Model retrained successfully and saved!")
+        st.write("File uploaded successfully! Here's a preview:")
+        import pandas as pd
+        data = pd.read_csv(uploaded_file)
+        st.dataframe(data.head())
+
+        if st.button("Retrain"):
+            # Dummy retrain logic
+            st.success("The model has been retrained with the new data!")
+            st.info("This is a placeholder retrain logic. Implement actual model training here.")
+    else:
+        st.info("Upload a CSV file to start retraining the model.")

@@ -1,12 +1,6 @@
 import pickle
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from .model_utils import load_model  # Use relative imports
-
-import sys
-sys.path.append("C:/Users/Hp/Desktop/Summative-Assignment-/education_access_app")
-from model_utils import load_model
-
 
 # Path to the model
 MODEL_PATH = "models/education_access_model.pkl"

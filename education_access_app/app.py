@@ -2,14 +2,14 @@ import streamlit as st
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from education_access_app.model_utils import load_model
-from home import home_page
-from prediction import prediction_page
-from retrain_model import retrain_page
-import sys
-print(sys.path)
+# Add the parent directory of education_access_app to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# Import from education_access_app
+from education_access_app.home import home_page
+from education_access_app.prediction import prediction_page
+from education_access_app.retrain_model import retrain_page
+from education_access_app.model_utils import load_model
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
