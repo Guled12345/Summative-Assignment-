@@ -20,7 +20,7 @@ def retrain_model_page():
             y = data.iloc[:, -1]  # Target column
 
             # Use the correct model path
-            model_path = r"C:\Users\Hp\Desktop\Summative-Assignment-\models\basic_model.h5"
+            model_path = r"C:/Users/Hp/Documents/GitHub/Summative-Assignment-/models/basic_model.h5"
 
             # Check if the model file exists
             if not os.path.exists(model_path):
