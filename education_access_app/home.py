@@ -12,4 +12,4 @@ def home_page():
 
         Use the sidebar to navigate through the app.
     """)
-    st.image("https://via.placeholder.com/800x400", caption="Education for All", use_column_width=True)
+    st.image("https://2012-2017.usaid.gov/sites/default/files/classroom_1.jpg", caption="Education for All", use_column_width=True)
