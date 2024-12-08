@@ -20,16 +20,20 @@ def prediction_page():
 
     if submitted:
         try:
-            # Change the path to point to Desktop
-            model_path = r"C:/Users/Hp/Desktop/Summative-Assignment-/models/basic_model.h5"
+            # Corrected the path to use raw string to avoid issues with backslashes
+            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
             print(f"Checking if model file exists at: {model_path}")  # Debugging print statement
 
+            # Check if the model file exists
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
             model = tf.keras.models.load_model(model_path)
 
+            # Prepare input data
             input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender, displaced, special_needs, missing_feature]])
+
+            # Make prediction
             prediction = model.predict(input_data)
             result = "Dropout" if prediction[0][0] > 0.5 else "No Dropout"
             st.success(f"The prediction is: {result}")
