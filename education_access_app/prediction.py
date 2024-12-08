@@ -20,7 +20,7 @@ def prediction_page():
 
     if submitted:
         try:
-            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models"
+            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
