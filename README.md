@@ -4,7 +4,7 @@ Enhancing Access to Education in Somalia with Predictive Tools
 The Education Access Web Application is an innovative platform aimed at improving education accessibility in Somalia. It offers users the ability to generate predictions, retrain machine learning models with updated data, and gain insights through data visualization.
 
 # 🔗 Project Links
-Live Application: Access the App
+Live Application: https://educationaccess5.streamlit.app/ 
 Backend API: View the API
 The backend API runs via the main.py file located in the src folder. This file includes key functions and scripts for processing and predictions.
 Demo Walkthrough: Video Demonstration
