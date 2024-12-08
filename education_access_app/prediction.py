@@ -7,7 +7,6 @@ def prediction_page():
     st.title("Predict Potential Dropouts")
     st.write("Fill out the fields below to predict if a student will drop out.")
 
-    # Define form fields
     with st.form("prediction_form"):
         daytime_evening = st.selectbox("Daytime/Evening Attendance", [0, 1])
         mother_occupation = st.number_input("Mother's Occupation", min_value=1, max_value=20, value=1)
@@ -27,12 +26,13 @@ def prediction_page():
 
     if submitted:
         try:
-            # Correct the model path if necessary
             model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
-            if not os.path.exists(model_path):
-                raise FileNotFoundError(f"Model file not found at: {model_path}")
             
-            # Load the model
+            # Check if the model file exists
+            if not os.path.exists(model_path):
+                st.error(f"Model file not found at {model_path}")
+                return
+            
             model = tf.keras.models.load_model(model_path)
 
             # Prepare input data for prediction
@@ -40,8 +40,6 @@ def prediction_page():
             
             # Make prediction
             prediction = model.predict(input_data)
-
-            # Interpret the prediction
             result = "Dropout" if prediction[0][0] > 0.5 else "No Dropout"
             st.success(f"The prediction is: {result}")
 
