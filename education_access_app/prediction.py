@@ -22,9 +22,9 @@ def prediction_page():
         try:
             # Corrected the path to use raw string to avoid issues with backslashes
             model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
-            print(f"Checking if model file exists at: {model_path}")  # Debugging print statement
 
-            # Check if the model file exists
+            # Debugging: Check if the path exists
+            st.write(f"Model path used: {model_path}")
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
