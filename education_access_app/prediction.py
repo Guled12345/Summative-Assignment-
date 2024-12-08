@@ -11,9 +11,9 @@ def prediction_page():
         daytime_evening = st.selectbox("Daytime/Evening Attendance", [0, 1])
         mother_occupation = st.number_input("Mother's Occupation", min_value=1, max_value=20, value=1)
         father_occupation = st.number_input("Father's Occupation", min_value=1, max_value=20, value=1)
-        gender = st.selectbox("Gender", [0, 1])
-        displaced = st.selectbox("Displaced", [0, 1])
-        special_needs = st.selectbox("Educational Special Needs", [0, 1])
+        gender = st.selectbox("Gender", [male, female])
+        displaced = st.selectbox("Displaced", [yes, no])
+        special_needs = st.selectbox("Educational Special Needs", [yes, no])
         missing_feature = st.number_input("Missing Feature Placeholder", min_value=0, value=0)
 
         submitted = st.form_submit_button("Predict")
