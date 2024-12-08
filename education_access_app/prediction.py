@@ -1,44 +1,42 @@
 import streamlit as st
-import numpy as np
-import os
+import pandas as pd
 import tensorflow as tf
+import os
 
-def prediction_page():
-    st.title("Predict Potential Dropouts")
-    st.write("Fill out the fields below to predict if a student will drop out.")
+def retrain_model_page():
+    st.title("Retrain the Model")
+    st.write("Upload a dataset to retrain the model.")
 
-    # Create input fields for the user
-    with st.form("prediction_form"):
-        daytime_evening = st.selectbox("Daytime/Evening Attendance", [0, 1])
-        mother_occupation = st.number_input("Mother's Occupation", min_value=1, max_value=20, value=1)
-        father_occupation = st.number_input("Father's Occupation", min_value=1, max_value=20, value=1)
-        gender = st.selectbox("Gender", [0, 1])
-        displaced = st.selectbox("Displaced", [0, 1])
-        special_needs = st.selectbox("Educational Special Needs", [0, 1])
-        missing_feature = st.number_input("Missing Feature Placeholder", min_value=0, value=0)
+    uploaded_file = st.file_uploader("Upload CSV File", type=["csv"])
 
-        submitted = st.form_submit_button("Predict")
-
-    if submitted:
+    if uploaded_file:
         try:
+            # Load the dataset
+            data = pd.read_csv(uploaded_file)
+            st.write("Dataset Preview", data.head())
+
+            # Separate features and target
+            X = data.iloc[:, :-1]  # Exclude the last column (Target)
+            y = data.iloc[:, -1]  # Target column
+
             # Ensure path is correctly formatted for Windows
             model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
 
+            # Check if the model file exists
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
-            # Load the model
+            # Load and retrain the model (mock retraining in this example)
+            st.write("Retraining the model...")
             model = tf.keras.models.load_model(model_path)
 
-            # Prepare the input data for prediction
-            input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender, displaced, special_needs, missing_feature]])
-            
-            # Make prediction
-            prediction = model.predict(input_data)
+            # Optionally: Retrain the model using the dataset (Example: Training for a few epochs)
+            model.fit(X, y, epochs=5)  # Retraining for 5 epochs (adjust as needed)
 
-            # Interpret the prediction
-            result = "Dropout" if prediction[0][0] > 0.5 else "No Dropout"
-            st.success(f"The prediction is: {result}")
+            # Save the retrained model
+            retrained_model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\retrained_model.h5"
+            model.save(retrained_model_path)
 
+            st.success(f"Model retrained and saved successfully at {retrained_model_path}!")
         except Exception as e:
-            st.error(f"An unexpected error occurred: {e}")
+            st.error(f"An error occurred: {e}")
