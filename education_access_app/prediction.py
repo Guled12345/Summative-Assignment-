@@ -21,22 +21,31 @@ def prediction_page():
 
     if submitted:
         try:
-            model_path = r"C:/Users/Hp/Documents/GitHub/Summative-Assignment-/models/basic_model.h5"
+            # Ensure model path is set correctly (use relative path or environment variable for deployment)
+            model_path = "models/basic_model.h5"  # Relative path assuming model is in 'models' folder
 
+            # For local testing, you can use an absolute path like:
+            # model_path = r"C:/Users/Hp/Documents/GitHub/Summative-Assignment-/models/basic_model.h5"
+            
+            # Check if the model file exists
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
+            # Load the model
             model = tf.keras.models.load_model(model_path)
 
             # Prepare the input data for prediction
             input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender, displaced, special_needs, missing_feature]])
-            
+
             # Make prediction
             prediction = model.predict(input_data)
 
             # Interpret the prediction
             result = "Dropout" if prediction[0][0] > 0.5 else "No Dropout"
             st.success(f"The prediction is: {result}")
+
+        except FileNotFoundError as fnf_error:
+            st.error(f"Error: {fnf_error}")
 
         except Exception as e:
             st.error(f"An unexpected error occurred: {e}")
