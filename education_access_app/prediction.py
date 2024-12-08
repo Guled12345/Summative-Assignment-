@@ -12,9 +12,9 @@ def register_custom_objects():
     from tensorflow.keras.layers import Dense
     from tensorflow.keras import layers
 
-    # Registering DTypePolicy for deserialization
+    # Registering DTypePolicy for deserialization using tf.float32
     get_custom_objects().update({
-        'DTypePolicy': K.float32,
+        'DTypePolicy': tf.float32,  # Correct usage of tf.float32
         'Dense': Dense
     })
 
