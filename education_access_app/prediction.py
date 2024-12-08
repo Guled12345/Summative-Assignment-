@@ -20,25 +20,19 @@ def prediction_page():
 
     if submitted:
         try:
-            # Model path
             model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
             st.write(f"Model path used: {model_path}")
 
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
-
-            # Load the model
-            model = tf.keras.models.load_model(model_path)
-
-            # Prepare the input data
-            input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender == "Male", displaced == "Yes", special_needs == "Yes", missing_feature]])
             
-            # Predict
+            model = tf.keras.models.load_model(model_path)
+            st.success("Model loaded successfully.")
+
+            input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender == "Male", displaced == "Yes", special_needs == "Yes", missing_feature]])
             prediction = model.predict(input_data)
             result = "Dropout" if prediction[0][0] > 0.5 else "No Dropout"
             st.success(f"The prediction is: {result}")
 
-        except ValueError as ve:
-            st.error(f"Model loading failed due to a deserialization issue: {ve}")
         except Exception as e:
             st.error(f"An unexpected error occurred: {e}")
