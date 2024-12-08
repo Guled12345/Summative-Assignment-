@@ -11,32 +11,26 @@ def prediction_page():
         daytime_evening = st.selectbox("Daytime/Evening Attendance", [0, 1])
         mother_occupation = st.number_input("Mother's Occupation", min_value=1, max_value=20, value=1)
         father_occupation = st.number_input("Father's Occupation", min_value=1, max_value=20, value=1)
-        gender = st.selectbox("Gender", ["male", "female"])
-        displaced = st.selectbox("Displaced", ["yes", "no"])
-        special_needs = st.selectbox("Educational Special Needs", ["yes", "no"])
+        gender = st.selectbox("Gender", ["Male", "Female"])
+        displaced = st.selectbox("Displaced", ["Yes", "No"])
+        special_needs = st.selectbox("Educational Special Needs", ["Yes", "No"])
         missing_feature = st.number_input("Missing Feature Placeholder", min_value=0, value=0)
 
         submitted = st.form_submit_button("Predict")
 
     if submitted:
         try:
-            # Update the model path to the correct one
-            model_path = r"C:/Users/Hp/Documents/GitHub/Summative-Assignment-/models/basic_model.h5"
+            # Change the path to point to Desktop
+            model_path = r"C:/Users/Hp/Desktop/Summative-Assignment-/models/basic_model.h5"
+            print(f"Checking if model file exists at: {model_path}")  # Debugging print statement
 
-            # Check if the model file exists at the given path
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
-            # Load the model
             model = tf.keras.models.load_model(model_path)
 
-            # Prepare input data for prediction
             input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender, displaced, special_needs, missing_feature]])
-            
-            # Make prediction
             prediction = model.predict(input_data)
-
-            # Interpret the prediction
             result = "Dropout" if prediction[0][0] > 0.5 else "No Dropout"
             st.success(f"The prediction is: {result}")
 
