@@ -17,7 +17,7 @@ def retrain_model_page():
             X = data.iloc[:, :-1]
             y = data.iloc[:, -1]
 
-            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\new_basic_model.h5"
+            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models"
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
 
