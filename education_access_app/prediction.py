@@ -20,17 +20,15 @@ def prediction_page():
 
     if submitted:
         try:
-            # Updated model path, ensure you're in the correct directory for the model path
             model_path = os.path.join(os.getcwd(), "models", "basic_model.h5")
 
-            # Debugging: Check if the path exists
             st.write(f"Model path used: {model_path}")
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
             
-            model = tf.keras.models.load_model(model_path)
+            # Load model with compile=False to avoid deserialization issues
+            model = tf.keras.models.load_model(model_path, compile=False)
 
-            # Prepare input data
             input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender, displaced, special_needs, missing_feature]])
 
             # Make prediction
