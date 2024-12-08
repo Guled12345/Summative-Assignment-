@@ -20,8 +20,8 @@ def prediction_page():
 
     if submitted:
         try:
-            # Corrected the path to use raw string to avoid issues with backslashes
-            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
+            # Updated model path, ensure you're in the correct directory for the model path
+            model_path = os.path.join(os.getcwd(), "models", "basic_model.h5")
 
             # Debugging: Check if the path exists
             st.write(f"Model path used: {model_path}")
