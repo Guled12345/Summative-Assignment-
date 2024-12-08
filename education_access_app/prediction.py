@@ -3,6 +3,21 @@ import numpy as np
 import os
 import tensorflow as tf
 
+# Register DTypePolicy to avoid errors with deserialization
+from tensorflow.keras import backend as K
+from tensorflow.keras.utils import get_custom_objects
+
+# Add this custom dtype policy registration to handle deserialization of custom layers or policies
+def register_custom_objects():
+    from tensorflow.keras.layers import Dense
+    from tensorflow.keras import layers
+
+    # Registering DTypePolicy for deserialization
+    get_custom_objects().update({
+        'DTypePolicy': K.float32,
+        'Dense': Dense
+    })
+
 def prediction_page():
     st.title("Predict Potential Dropouts")
     st.write("Fill out the fields below to predict if a student will drop out.")
@@ -20,15 +35,20 @@ def prediction_page():
 
     if submitted:
         try:
+            # Use the correct model path
             model_path = os.path.join(os.getcwd(), "models", "basic_model.h5")
             st.write(f"Model path used: {model_path}")
             
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
-            
-            # Load the model with compile=False and custom_objects to handle any custom layers or versions
-            model = tf.keras.models.load_model(model_path, compile=False, custom_objects={'InputLayer': tf.keras.layers.Input})
 
+            # Register custom objects before loading the model
+            register_custom_objects()
+            
+            # Load the model with compile=False to avoid unnecessary recompilation
+            model = tf.keras.models.load_model(model_path, compile=False)
+
+            # Prepare the input data
             input_data = np.array([[daytime_evening, mother_occupation, father_occupation, gender, displaced, special_needs, missing_feature]])
 
             # Make prediction
