@@ -36,7 +36,7 @@ Download the project repository:
 
 bash
 Copy code
-git clone https://github.com/your-username/education-access-app.git
+git clone https://github.com/Guled12345/education-access-app.git
 cd education-access-app
 2. Install Required Libraries
 Install all dependencies using the requirements.txt file:
