@@ -24,7 +24,8 @@ def prediction_page():
             st.write(f"Model path used: {model_path}")
 
             if not os.path.exists(model_path):
-                raise FileNotFoundError(f"Model file not found at: {model_path}")
+                st.error(f"Model file not found at: {model_path}")
+                return
             
             model = tf.keras.models.load_model(model_path)
             st.success("Model loaded successfully.")
