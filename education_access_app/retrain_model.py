@@ -17,13 +17,14 @@ def retrain_model_page():
             X = data.iloc[:, :-1]
             y = data.iloc[:, -1]
 
-            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models"
+            # Update this path to match the actual directory where your model is stored
+            model_path = "./models/basic_model.h5"  # Replace this with the correct path if necessary
             if not os.path.exists(model_path):
                 raise FileNotFoundError(f"Model file not found at: {model_path}")
 
             st.write("Retraining the model...")
             model = tf.keras.models.load_model(model_path)
-            retrained_model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\retrained_model.h5"
+            retrained_model_path = "./models/retrained_model.h5"  # Save the retrained model here
             model.save(retrained_model_path)
             st.success(f"Model retrained and saved successfully at {retrained_model_path}!")
 
