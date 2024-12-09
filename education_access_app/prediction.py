@@ -3,14 +3,15 @@ import numpy as np
 import os
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from tensorflow.keras.layers import InputLayer
+from tensorflow.keras.layers import Dense
 
-# Custom InputLayer to handle deserialization issues
-class CustomInputLayer(InputLayer):
+# Custom Dense layer to handle deserialization issues
+class CustomDense(Dense):
     @classmethod
     def from_config(cls, config):
         # Fix any unsupported arguments in the config
-        config.pop('batch_shape', None)  # Remove batch_shape if it exists
+        if "dtype" in config:
+            config.pop("dtype", None)  # Remove dtype if it exists
         return super().from_config(config)
 
 def prediction_page():
@@ -42,7 +43,7 @@ def prediction_page():
                 return
 
             # Load the model with the custom object scope
-            with tf.keras.utils.custom_object_scope({'InputLayer': CustomInputLayer}):
+            with tf.keras.utils.custom_object_scope({'Dense': CustomDense}):
                 model = load_model(model_path)
 
             st.success("Model loaded successfully.")
