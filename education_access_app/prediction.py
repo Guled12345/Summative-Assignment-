@@ -22,8 +22,8 @@ def prediction_page():
     # Handle form submission
     if submitted:
         try:
-            # Path to the model file
-            model_path = os.path.join("education_access_app", "models", "basic_model.h5")
+            # Path to the model file (directly in the education_access_app folder)
+            model_path = os.path.join("education_access_app", "basic_model.h5")
             st.write(f"Model path used: {model_path}")
 
             # Check if the model file exists
