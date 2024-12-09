@@ -2,6 +2,8 @@ import streamlit as st
 import numpy as np
 import os
 import tensorflow as tf
+from tensorflow.keras.models import load_model
+from tensorflow.keras.utils import get_custom_objects
 
 def prediction_page():
     st.title("Predict Potential Dropouts")
@@ -22,8 +24,8 @@ def prediction_page():
     # Handle form submission
     if submitted:
         try:
-            # Path to the model file (directly in the education_access_app folder)
-            model_path = os.path.join("education_access_app", "basic_model.h5")
+            # Path to model file, assuming it's located in the same directory
+            model_path = "./education_access_app/basic_model.h5"
             st.write(f"Model path used: {model_path}")
 
             # Check if the model file exists
@@ -31,15 +33,17 @@ def prediction_page():
                 st.error(f"Model file not found at: {model_path}")
                 return
 
-            # Load the model
-            model = tf.keras.models.load_model(model_path)
+            # Load the model within custom object scope if necessary
+            with get_custom_objects():
+                model = load_model(model_path)
+
             st.success("Model loaded successfully.")
 
             # Prepare input data
             input_data = np.array([[
-                daytime_evening, 
-                mother_occupation, 
-                father_occupation, 
+                daytime_evening,
+                mother_occupation,
+                father_occupation,
                 1 if gender == "Male" else 0,  # Encode gender as binary
                 1 if displaced == "Yes" else 0,  # Encode displaced as binary
                 1 if special_needs == "Yes" else 0,  # Encode special needs as binary
