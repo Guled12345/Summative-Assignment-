@@ -5,10 +5,13 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import InputLayer
 
-# Custom function to handle batch_shape
-def custom_input_layer_from_config(config):
-    config.pop('batch_shape', None)  # Remove unsupported argument
-    return InputLayer(**config)
+# Custom InputLayer class to handle deserialization
+class CustomInputLayer(InputLayer):
+    @classmethod
+    def from_config(cls, config):
+        # Remove unsupported arguments
+        config.pop('batch_shape', None)
+        return super().from_config(config)
 
 def prediction_page():
     st.title("Predict Potential Dropouts")
@@ -29,7 +32,7 @@ def prediction_page():
     # Handle form submission
     if submitted:
         try:
-            # Path to your existing model
+            # Path to your model
             model_path = "./education_access_app/basic_model.h5"
             st.write(f"Model path used: {model_path}")
 
@@ -38,8 +41,8 @@ def prediction_page():
                 st.error(f"Model file not found at: {model_path}")
                 return
 
-            # Load the model with custom object handling
-            with tf.keras.utils.custom_object_scope({'InputLayer': custom_input_layer_from_config}):
+            # Load the model with the custom object scope
+            with tf.keras.utils.custom_object_scope({'InputLayer': CustomInputLayer}):
                 model = load_model(model_path)
 
             st.success("Model loaded successfully.")
