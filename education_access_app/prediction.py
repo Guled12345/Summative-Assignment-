@@ -20,7 +20,7 @@ def prediction_page():
 
     if submitted:
         try:
-            model_path = r"C:\Users\Hp\Documents\GitHub\Summative-Assignment-\models\basic_model.h5"
+            model_path = r"..\models\basic_model.h5"
             st.write(f"Model path used: {model_path}")
 
             if not os.path.exists(model_path):
