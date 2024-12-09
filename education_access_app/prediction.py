@@ -23,8 +23,8 @@ def prediction_page():
     # Handle form submission
     if submitted:
         try:
-            # Path to model file, assuming it's located in the same directory
-            model_path = "./education_access_app/basic_model.h5"
+            # Path to the re-saved model
+            model_path = "./education_access_app/basic_model_resaved.h5"
             st.write(f"Model path used: {model_path}")
 
             # Check if the model file exists
