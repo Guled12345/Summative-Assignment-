@@ -23,7 +23,7 @@ def prediction_page():
     if submitted:
         try:
             # Relative path to model
-            model_path = os.path.abspath("../models/basic_model.h5")
+            model_path = os.path.abspath("./basic_model.h5")
             st.write(f"Model path used: {model_path}")
 
             # Check if the model file exists
