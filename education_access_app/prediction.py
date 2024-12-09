@@ -56,5 +56,6 @@ def prediction_page():
             st.success(f"The prediction is: {result}")
 
         except Exception as e:
-            # Log detailed errors
-            st.error(f"An unexpected error occurred: {e}")
+            # Log the full exception for better debugging
+            st.error(f"An unexpected error occurred: {str(e)}")
+            st.write("Error Details:", e)  # Show more details about the exception
