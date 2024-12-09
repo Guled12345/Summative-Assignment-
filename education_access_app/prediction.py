@@ -3,7 +3,6 @@ import numpy as np
 import os
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from tensorflow.keras.utils import get_custom_objects
 
 def prediction_page():
     st.title("Predict Potential Dropouts")
@@ -33,10 +32,8 @@ def prediction_page():
                 st.error(f"Model file not found at: {model_path}")
                 return
 
-            # Load the model within custom object scope if necessary
-            with get_custom_objects():
-                model = load_model(model_path)
-
+            # Load the model
+            model = load_model(model_path)
             st.success("Model loaded successfully.")
 
             # Prepare input data
