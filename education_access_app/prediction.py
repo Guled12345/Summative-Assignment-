@@ -3,6 +3,12 @@ import numpy as np
 import os
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import InputLayer
+
+# Custom function to handle batch_shape
+def custom_input_layer_from_config(config):
+    config.pop('batch_shape', None)  # Remove unsupported argument
+    return InputLayer(**config)
 
 def prediction_page():
     st.title("Predict Potential Dropouts")
@@ -32,8 +38,10 @@ def prediction_page():
                 st.error(f"Model file not found at: {model_path}")
                 return
 
-            # Load the model
-            model = load_model(model_path)
+            # Load the model with custom object handling
+            with tf.keras.utils.custom_object_scope({'InputLayer': custom_input_layer_from_config}):
+                model = load_model(model_path)
+
             st.success("Model loaded successfully.")
 
             # Prepare input data
@@ -55,4 +63,4 @@ def prediction_page():
         except Exception as e:
             # Log the full exception for better debugging
             st.error(f"An unexpected error occurred: {str(e)}")
-            st.write("Error Details:", e)  # Show more details about the exception
+            st.write("Error Details:", e)
