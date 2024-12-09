@@ -22,15 +22,15 @@ def prediction_page():
     # Handle form submission
     if submitted:
         try:
-            # Relative path to model
-            model_path = "./basic_model.h5"
+            # Path to the model file
+            model_path = os.path.join("education_access_app", "models", "basic_model.h5")
             st.write(f"Model path used: {model_path}")
 
             # Check if the model file exists
             if not os.path.exists(model_path):
                 st.error(f"Model file not found at: {model_path}")
                 return
-            
+
             # Load the model
             model = tf.keras.models.load_model(model_path)
             st.success("Model loaded successfully.")
